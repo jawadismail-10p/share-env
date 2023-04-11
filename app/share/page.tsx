@@ -7,6 +7,7 @@ import {
   Cog6ToothIcon,
   InformationCircleIcon,
 } from "@heroicons/react/24/outline";
+import { encrypt } from "@/src/services/encryption";
 
 export default function Share() {
   const [text, setText] = useState("");
@@ -15,9 +16,26 @@ export default function Share() {
   const [ttl, setTtl] = useState(7);
   const [loading, setLoading] = useState(false);
   const [ttlMultiplier, setTtlMultiplier] = useState(60 * 60 * 24);
+  const [error, setError] = useState("");
+  const [link, setLink] = useState("");
 
   const onSubmit = async () => {
-    //TODO:
+    try {
+      setError("");
+      setLink("");
+      setLoading(true);
+      const textCleaned = text.trim();
+
+      const { encrypted, iv, key } = await encrypt(textCleaned);
+
+      // const res = //TODO:
+      
+    } catch (e) {
+      console.error(e);
+      setError((e as Error).message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
