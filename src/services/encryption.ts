@@ -1,4 +1,5 @@
-import { fromBase58 } from "@/src/lib/utils";
+import { fromBase58, toBase58 } from "@/src/lib/utils";
+import { ID_LENGTH } from "../lib/constants";
 
 export async function generateKey() {
   return await crypto.subtle.generateKey(
@@ -61,4 +62,10 @@ export async function decrypt(
   );
 
   return new TextDecoder().decode(decrypted);
+}
+
+export function generateId(): string {
+  const bytes = new Uint8Array(ID_LENGTH);
+  crypto.getRandomValues(bytes);
+  return toBase58(bytes);
 }
